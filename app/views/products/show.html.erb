@@ -1,0 +1,239 @@
+<% title "#{@product.title} #{@product.subcategory.try(:name)} #{@title_text.text}"%>
+<% meta_d sanitize(strip_tags("#{@product.name} | #{@product.short_description} #{@keywords_text.text}").gsub("\"", "&quot;") )%>
+<% meta_k @product.meta_k%>
+<div class="clearfix">
+  <div class="col1of5">
+    <%=render "shared/brands_filter"%>
+    <%=render "shared/catalog"%>
+    <%=render "shared/news"%>
+    <%=render "shared/left_banner"%>
+  </div>
+  <div class="col3of5">
+    <div class="container mhs">
+      <div class="mhm mvs">
+        <h3 class="mbs"><%= @product.name%>
+          <%if !@product.promotions.empty? %>
+            <%= link_to promotion_path(@product.promotions.first), :data => { :title => @product.promotions.first.description} do%>
+              <span class="label label-important">Акция</span>
+            <%end%>
+          <%end%>
+        </h3>
+        <div class="breadcrumb">
+          <%= link_to "Каталог товаров", root_path %> /
+          <% unless @product.withdrawn?%>
+            <%= link_to @product.subcategory.category.name, categories_list_path(:id => @product.subcategory.category.id) %> /
+            <%= link_to @product.subcategory.try(:name), category_path(@product.subcategory)%> /
+          <%else%>
+            <%= link_to "Товары снятые с производства", withdrawn_brands_path%> /
+          <%end%>
+          <%= link_to @product.brand.name.capitalize, category_brand_path(@product.subcategory, @product.brand)%> /
+          <span><%= @product.name%></span>
+        </div>
+
+        <div class="clearfix mbm">
+          <div class="col3of5">
+            <div class="mrm mtl">
+              <div class="mbm">
+                <span class="muted">цена:</span>
+                <%if @product.promo?%>
+                  <span class="old-price">
+                    <%= product_old_price(@product)%>
+                  </span>
+                <%end%>
+                <span class="product-price">
+                  <%= product_price(@product)%>
+                </span>
+              </div>
+              <div class="mbs">
+                <strong>Код товара: </strong>
+                <span><%= @product.id%></span>
+              </div>
+              <% if @product.color_present? %>
+                <div class="mbs">
+                  <strong>Товар доступен в разных цветах:</strong>
+                  <span class="icon"><%= image_tag ('icons/checkbox_1.png'), :class=>"yes" %></span>
+                </div>
+              <% end %>
+              <div class="mbm">
+                <strong>Наличие: </strong>
+                <span class="success"><%= @product.status.name%></span>
+              </div>
+              <div class="clearfix mbl">
+              <div class="mbm">
+                <%= link_to (image_tag @product.brand.logo_url(:thumb) ), brand_path( @product.brand ) %>
+              </div>
+              </div>
+              <div class="mbl">
+                <strong>Валюта:</strong>
+                <%= form_tag change_currency_path, :method => :put, :style=>"display: inline;" do%>
+                <select name="currency" id="" style="width: 80px" change="submitForm">
+                  <option value="uah" <%= "selected" if session[:currency] == "uah"%>>ГРН</option>
+                  <option value="usd" <%= "selected" if session[:currency] == "usd"%>>USD</option>
+                  <option value="eur" <%= "selected" if session[:currency] == "eur"%>>EUR</option>
+                </select>
+                <%end%>
+              </div>
+              <%unless @product.withdrawn?%>
+                <div class="mbl">
+                  <%= link_to "Купить сейчас", add_cart_path(:id=>@product.id), :class=>"buy-button", :method=>:put%>
+                </div>
+              <%end%>
+              <div class="clearfix mbl">
+                <div class="mbs">
+                  <g:plusone size="medium" annotation="inline"></g:plusone>
+                </div>
+                <div class="mbs">
+                  <div class="fb-like" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+                </div>
+                <div class="mbs">
+                  <div id="vk_like"></div>
+                  <script type="text/javascript">
+                  VK.Widgets.Like("vk_like", {type: "button"});
+                  </script>
+                </div>
+                <div class="mbs">
+                  <a href="https://twitter.com/share" class="twitter-share-button" data-via="muzkom" data-lang="ru" data-related="muzkom" data-hashtags="muzkom">Твитнуть</a>
+                  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div>
+              </div>
+              <%unless @product.withdrawn?%>
+              <div class="clearfix mbl">
+                <div class="col1of2">
+                  <%= link_to "/payment_delivery" do%>
+                    <%= image_tag "icons/delivery.png", :class=>"left mrm", :size=>"36x36"%>
+                    Бесплатная доставка
+                  <%end%>
+                </div>
+                <div class="col1of2">
+                  <%= link_to "/discount" do%>
+                    <%= image_tag "icons/discount.png", :class=>"left mrm", :size=>"36x36"%>
+                    Дисконтная программа
+                  <%end%>
+                </div>
+                <div class="clearfix mbl">
+                </div>
+                <div class="col1of2">
+                  <%= link_to "/credits" do%>
+                    <%= image_tag "icons/icon-money.png", :class=>"left mrm", :size=>"36x36"%>
+                    Рассрочка,&nbsp&nbsp&nbsp оплата частями
+                  <%end%>
+                </div>
+              </div>
+              <%end%>
+            </div>
+          </div>
+          <div class="col2of5">
+            <div class="right">
+              <div class="product-image-preview">
+                <div class="inner">
+                  <%= link_to image_tag(@product.image_url), @product.image_url, :for=>'photo0', :title=>"#{link_to("Увеличить изображение", @product.image_url, :target=>"_blank")}"%>
+                </div>
+              </div>
+              <% if @product.photos.any?%>
+              <div class="product-image-gallery" id="photos_container">
+                <%=link_to image_tag(@product.image_url(:thumb)), @product.image_url, :class=>"photo", :id=>'photo0', :rel=>"lightbox", :title=>"#{link_to("Увеличить изображение", @product.image_url, :target=>"_blank")}"%>
+                <% @product.photos.each do |photo|%>
+                  <%=link_to image_tag(photo.image_url(:thumb)), photo.image_url, :class=>"photo", :id=>"photo#{photo.id}", :rel=>"lightbox", :title=>"#{link_to("Увеличить изображение", photo.image_url, :target=>"_blank")}" %>
+                <%end%>
+              </div>
+              <%end%>
+            </div>
+          </div>
+        </div>
+        <%if @product.withdrawn?%>
+          <div class="notification mbl">Данная модель <%= @product.name%> продана и уже не производится. Актуальные модели можно найти в разделе <%= link_to @product.subcategory.name, category_path(@product.subcategory)%>.</div>
+        <%end%>
+        <div class="clearfix">
+          <ul class="tab-switcher clearfix">
+            <%# cookies[:tab] = 'tab1' if cookies[:tab].nil? %>
+            <% cookies[:tab] = 'tab1'%>
+            <li><a href="#tab1" for="tab1" class="<%= 'current' if cookies[:tab] == 'tab1'%>">Описание</a></li>
+            <% unless @product.videos.empty?%>
+              <li><a href="#tab2">Видео</a></li>
+            <%end%>
+            <li><a href="#tab3" for="tab3" class='<%= 'current' if cookies[:tab] == 'tab3'%>'>Комментарии (<%= @product.product_comments.count%>)</a></li>
+          </ul>
+          <div class="tab-container">
+            <div id="tab1" class="tab <%='hidden' if cookies[:tab] != 'tab1'%>">
+              <div class="mam">
+                <%= @product.description.html_safe%>
+              </div>
+            </div>
+            <% unless @product.videos.empty?%>
+            <div id="tab2" class="tab hidden">
+              <div class="mam">
+                <%@product.videos.each do |video|%>
+                  <div class="mbm">
+                    <%=video.code.html_safe%>
+                  </div>
+                <%end%>
+              </div>
+            </div>
+            <%end%>
+            <div id="tab3" class="tab <%= 'hidden' unless cookies[:tab] == 'tab3'%>">
+              <% @product.product_comments.each_with_index do |comment, i|%>
+              <div class="comment <%=(i+1)%2 == 0 ? 'z2' : 'z1'%>">
+                <div class="mbs">
+                  <small class="muted"><%= human_date_time comment.created_at%></small> |
+                  <strong><%= comment.name%></strong>
+                </div>
+                <p><%= comment.text%></p>
+              </div>
+              <%end%>
+              <div class="mam">
+                <%if @product.product_comments.empty?%>
+                  <p class="mvl muted">Не комментариев. Будьте первым, кто оставит комментарий.</p>
+                <%end%>
+                <br />
+                <% unless flash[:form_error].nil? %>
+                  <div class="form-error">
+                    <%= flash[:form_error]%>
+                  </div>
+                <%end%>
+                <h4 class="mbm">Добавить новый комментарий</h4>
+                <%=form_for [@product, @comment] do |f|%>
+                <div class="field">
+                  <label for="">Ваше имя</label>
+                  <%= f.text_field :name, :class=>"text"%>
+                </div>
+                <div class="field">
+                  <label id='CharCountLabel1' for=""></label>
+                  <%= f.text_area :text, :class => "text", :size=>"0x5", :maxlength => 250, :id => 'myfield' %>
+                </div>
+                <div class="field">
+                  <%= recaptcha_tags :display=>{:theme=>"white"}%>
+                </div>
+                <%= f.hidden_field :product_id, :value => @product.id%>
+                <%= link_to "Отправить", "#", :class=>"submit-button add-product-comment"%>
+                <%end%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col1of5">
+    <%=render "shared/code_search"%>
+    <%=render "shared/contacts"%>
+    <div class="container">
+      <h2><span>Похожие товары</span></h2>
+      <div class="pam">
+        <% @similar.each do |product|%>
+        <div class="by-center mbl">
+          <div class="">
+            <strong>
+              <%= link_to product.name, product_path(product)%>
+            </strong>
+          </div>
+          <div class="mbs">
+            <%= link_to image_tag(product.image_url(:thumb)), product_path(product)%>
+          </div>
+         <%= render "shared/product_price", :product=>product%>
+        </div>
+        <%end%>
+      </div>
+    </div>
+    <%=render "shared/right_banner"%>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="row news white m-t-20 p-b-25  visible-md-block visible-lg-block">
+ <h5 class="opensans red m-20 m-b-40 font10"><strong><i>Последние новости</i></strong></h5>
+  <% @latest_news.each_with_index do |publication, index|%>
+  <div class="publication">
+	  	<% if publication.has_image?%>
+	                <%= image_tag publication.image_url(:thumb)%>
+	              <%end%>
+	    <strong><%= link_to publication.title, publication_path(publication) %></strong>
+	    <p class="date"><%=human_date(publication.date) %></p>
+	    <p class="description"><%= publication.description.truncate(200).html_safe%></p>
+	    
+  </div>
+	    <% if index != @latest_news.length-1 %>
+          <span class="divider divider-pub"></span>
+        <%end%>
+  <%end%>
+  <center><%= link_to "Все новости", publications_path, :class => "raleway red p-b-25"%></center>
+</div>

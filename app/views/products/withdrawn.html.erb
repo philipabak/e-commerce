@@ -1,0 +1,75 @@
+<% title "Muzkom - Товары снятые с производства #{@brand.name}"%>
+<div class="clearfix">
+  <div class="col1of5">
+    <%=render "shared/brands_filter"%>
+    <%=render "shared/catalog"%>
+    <%=render "shared/news"%>
+    <%=render "shared/left_banner"%>
+  </div>
+  <div class="col3of5">
+
+      <div class="container mhs">
+        <div class="mhm mvs">
+          <h3 class="mbs">Товары снятые с производства</h3>
+          <div class="breadcrumb">
+            <%= link_to "Каталог товаров", root_path %> /
+            <%= link_to "Товары снятые с производства", withdrawn_brands_path %> /
+            <span><%= @brand.name%></span>
+          </div>
+          <div class="clearfix mbm">
+            <%= link_to "Все производители", withdrawn_brands_path%>
+          </div>
+          <div class="clearfix mbm">
+            <div class="col1of2">
+             &nbsp;
+            </div>
+            <div class="col1of2">
+              <div class="pagination right">
+                <%= paginate @products%>
+              </div>
+            </div>
+          </div>
+          <hr color="#f5f5f5"/>
+          <% @products.each do |product|%>
+          <div class="product list">
+            <div class="clearfix mbm">
+              <div class="image">
+                <%= link_to image_tag(product.image_url(:thumb)), product_path(product)%>
+              </div>
+              <div class="last-col pll">
+                <p><strong><%=link_to product.name, product_path(product)%></strong></p>
+                <div><span class="muted">Код товара: <%= product.id%></span></div>
+                <p><%= product.short_description.html_safe%></p>
+                <div class="mbm">
+                  <span class="success"><%= product.status.name%></span>
+                </div>
+                <%#= link_to "подробнее >>", product_path(product) %>
+              </div>
+            </div>
+            <div class="clearfix">
+              <div class="col1of2">
+                <%= render "shared/product_price", :product=>product%>
+              </div>
+              <div class="col1of2">
+                <%unless product.withdrawn?%>
+                <%= link_to "Купить", add_cart_path(:id=>product.id), :class=>"buy-button right", :method=>:put%>
+                <%end%>
+              </div>
+            </div>
+          </div>
+          <%end%>
+          <div class="clearfix mbm">
+            <div class="pagination right">
+              <%= paginate @products%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col1of5">
+    <%=render "shared/code_search"%>
+    <%=render "shared/contacts"%>
+    <%=render "shared/latest"%>
+    <%=render "shared/right_banner"%>
+  </div>
+</div>

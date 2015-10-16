@@ -1,0 +1,35 @@
+<div class="row p-t-5">
+    <div class="col-md-3 col-sm-4 col-xs-6 p-0 p-l-15"><a href="/"><img style="width: 100%;" src="/images/Logo.png"/></a></div>
+    <div class="col-md-3 col-sm-3 hidden-xs p-0 p-l-15 p-l-phone">
+      <div class="col-md-1 w30px col-sm-2 p-0"><span class="big-icon phone-blue"></span></div>
+      <div class="col-md-9 col-sm-8 p-0 p-l-10"><div class="m-0 raleway">(063) 625 48 05<br>(044) 592 86 14</div></div>
+    </div>
+    <div class="col-md-3 col-sm-4  hidden-xs ">
+     <div class="col-md-1 col-sm-1 p-0"><span class="big-icon pin-blue"></span></div>
+     <div class="col-md-10 col-sm-10 p-0 p-l-10"><div class="m-0 raleway">Пн.- Пт.: 10:00 – 19:00<br>Онлайн заказы: 24/7/365</div></div>
+    </div>
+    <div class="col-md-2 p-0 hidden-sm hidden-xs">
+      <div class="right-inner-addon">
+        <%= form_tag products_fullsearch_path, :method => 'get', :style=>"height:35px" do %>
+                  <i class="glyphicon glyphicon-search"></i>
+                  <%= text_field_tag :fullsearch, params[:fullsearch], :class=> "form-control", :id => "products_search", :placeholder => "Поиск..."%>
+                  <%= submit_tag "", :name => nil, :class => "glyphicon glyphicon-search"  %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-6 p-r-30"><%= link_to cart_path do %><span class="  cart-padding big-icon cart-blue  right"><span class="redCircleBox"></span><% end %></span></div>
+</div>
+<div class="row p-l-15 p-t-15">
+  <div class="col-md-12 col-sm-9 hidden-xs p-0">
+    Оборудование для: DJ‘s | саунд-продюсеров | музыкантов | ночных клубов
+  </div>
+  <div class="col-sm-3 hidden-md hidden-lg col-xs-6  p-0"  style="bottom:7px;">
+      <div class="right-inner-addon">
+        <%= form_tag products_fullsearch_path, :method => 'get', :style=>"height:35px" do %>
+                  <i class="glyphicon glyphicon-search"></i>
+                  <%= text_field_tag :fullsearch, params[:fullsearch], :class=> "form-control", :id => "products_search", :placeholder => "Поиск..."%>
+                  <%= submit_tag "", :name => nil, :class => "glyphicon glyphicon-search"  %>
+        <% end %>
+      </div>
+    </div>
+</div>

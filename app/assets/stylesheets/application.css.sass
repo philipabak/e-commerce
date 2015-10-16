@@ -1,0 +1,406 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_directory ./plugins
+ */
+@import 'scaffy/scaffy'
+body
+  background: #f3f3f3
+
+.wrapper
+  margin: auto
+  padding: 0 10px
+  width: 1020px
+
+.navigation, .footer
+  +vertical-gradient(#444, #1f1f1f)
+
+.navigation
+  height: 40px
+
+.body
+  background: #fff
+  border-right: 1px solid #dedede
+  border-left: 1px solid #dedede
+  padding: 5px 5px 20px 5px
+
+.footer
+  p,a
+    color: #c0c0c0
+    font-size: 11px
+  padding: 20px 20px 10px 20px
+  border-top: 1px solid #202020
+  .block
+    border-right: 1px solid #4b4b4b
+    margin: 0 20px
+  .social_icon
+    vertical-align: middle
+    margin-right: 10px
+
+.phone
+  color: #831111
+
+.mainmenu
+  li
+    float: left
+    padding: 10px 0
+    &:first-child a
+      border: none
+    a
+      padding: 0px 15px
+      border-left: 1px solid #4b4b4b
+      color: #fff
+      &:hover
+        color: #f0f0f0
+
+.breadcrumb
+  font-size: 11px
+  color: #888
+  margin-bottom: 15px
+
+.brand-list
+  line-height: 1.5em
+  .brand
+    +inline-block()
+    margin-right: 8px
+    .quantity
+      color: #888
+      font-size: 10px
+
+.tab-container
+  min-height: 200px
+  border: 1px solid #ddd
+  min-height: 200px
+  margin: -1px 0 10px 0
+
+.tab-switcher li
+  float: left
+  a
+    margin-right: 3px
+    padding: 7px 10px
+    color: #333
+    border: 1px solid #ddd
+    background: #ECECEC
+    +text-shadow(0 1px 0 #fff)
+    +inline-block()
+    +border-radius(5px 5px 0 0)
+    &.current
+      border: 1px solid #ddd
+      border-bottom: 1px solid #fff
+      background: #fff
+      color: #000
+      +box-shadow(1px -1px 1px rgba(180, 180, 180, .2))
+    &:hover
+      text-decoration: none
+      +box-shadow(1px -1px 3px rgba(180, 180, 180, .2))
+.comment
+  padding: 10px
+  &.z1
+    background: #fff
+  &.z2
+    background: #fafafa
+
+.pagination
+  color: #888
+
+.contacts
+  background: #f8f8f8
+
+.publication
+  margin-bottom: 20px
+  padding-bottom: 20px
+  border-bottom: 1px solid #eee
+
+.cart
+  width: 200px
+  font-size: 11px
+  img
+    width: 32px
+    float: left
+    margin-right: 10px
+  .value
+    color: #990000
+
+.container
+  border: 1px solid #dedede
+  margin-bottom: 5px
+  +box-shadow(0 0 2px rgba(100,100,100,.2))
+  h2
+    font-size: 14px
+    padding: 8px 10px
+    +vertical-gradient(#fff, #f3f3f3)
+    +text-shadow(0 1px 0 #fff)
+    border-bottom: 1px solid #dedede
+    &.highlight
+      border: 1px solid #8a0000
+      color: #fff
+      margin: 0 -1px
+      +vertical-gradient(#c13832, #9f0202)
+      +box-shadow(inset 0px 1px 1px #cf625c)
+      +text-shadow(0 1px 0 #333)
+    span
+      padding-left: 10px
+      background: image-url('icons/gray-arrow.png') 0 7px no-repeat
+      
+.ccontainer
+  border: 1px solid #dedede
+  margin: 0px 5px 0px 5px
+  padding-top: 8px
+  +box-shadow(0 0 2px rgba(100,100,100,.2))
+
+.catalog
+  .category
+    display: block
+    padding: 6px 10px 6px 20px
+    background: #f8f8f8 image-url('icons/black-arrow.png') 10px 11px no-repeat
+    border-top: 1px solid #ececec
+    color: #333
+    &:hover
+      color: #990000
+      background-color: #f0f0f0
+      text-decoration: none
+  .subcategory
+    color: #666
+    display: block
+    border-top: 1px solid #f0f0f0
+    padding: 5px 10px 5px 30px
+    background: #fff image-url('icons/gray-arrow.png') 20px 11px no-repeat
+    &:hover
+      text-decoration: none
+      color: #777
+      background-color: #f6f9fd
+.cat-block
+
+  width: 296px
+  height: 280px
+  float: left
+  text-align: center
+
+.withdrawn
+  background: image-url('backgrounds/finish.png') right -30px no-repeat #9f0202
+  a
+    color: #fff
+    text-decoration: none
+
+.product
+  padding: 10px
+  height: 160px
+  &.block
+    border: 1px solid #f5f5f5
+  &.list
+    height: auto
+    border-bottom: 1px solid #f5f5f5
+    margin-bottom: 10px
+  .image
+    width: 100px
+    float: left
+  .description
+    padding-left: 10px
+  .price
+    font-size: 13px
+.publication
+  font-size: 11px
+  border-bottom: 1px solid #dedede
+  margin-bottom: 10px
+.success
+  color: #029f11
+.product-price
+  font-size: 18px
+.old-price
+  color: #990000
+  text-decoration: line-through
+
+.product-image-preview
+  .inner
+    display: table-cell
+    vertical-align: middle
+    text-align: center
+    width: 200px
+    height: 200px
+  width: 200px
+  height: 200px
+  padding: 5px
+  margin-bottom: 5px
+  border: 1px solid #eee
+  img
+    max-width: 200px
+    max-height: 200px
+.product-image-gallery
+  .photo
+    +inline-block()
+    border: 1px solid #f3f3f3
+    width: 50px
+    img
+      width: 100%
+
+table.cart-table
+  border-collapse: collapse
+  +border-radius(5px)
+  td, th
+    padding: 8px 10px
+    border: 1px solid #e7e7e7
+    vertical-align: middle
+  thead th
+    +box-shadow(inset 0 0 0 1px rgba(255,255,255,0.5))
+    background: #F6F6F6
+    color: #555
+  .text
+    width: 40px
+
+.buy-button, .submit-button
+  +simple-button(#990000, #fff)
+
+.submit-button, .action-button
+  +simple-button(#ddd, #333)
+  +text-shadow(0 1px 0 #fff)
+  padding: 5px 10px
+.action-button
+  padding: 2px 5px
+
+.text
+  width: 100%
+  border: 1px solid #bbb
+  padding: 2px 4px
+  +box-sizing()
+  +border-radius(5px)
+  $shadow: 0 0 3px rgba(100,100,100,0.2),inset 1px 2px 2px rgba(100,100,100,0.1)
+  +box-shadow($shadow)
+.field_with_errors .text
+  border-color: #db9292
+
+.field
+  margin-bottom: 10px
+  label
+    display: block
+    margin-bottom: 3px
+    .astra
+      color: red
+
+.form-error
+  margin-bottom: 15px
+  padding: 5px 10px
+  border: 1px solid #ff6464
+  +border-radius(5px)
+  background: #ffe8e8
+  color: #8d0404
+
+.notification
+  line-height: 1.5em
+  background: #fbfdfe
+  border: 1px solid #b1c8d5
+  padding: 10px
+
+.search
+  width: 240px
+
+ul.ui-autocomplete
+  position: absolute
+  list-style: none
+  margin: 0
+  padding: 0
+  border: solid 1px #999
+  cursor: default
+  li
+    background-color: #FFF
+    border-top: solid 1px #DDD
+    margin: 0
+    padding: 0
+    height: 90px
+  a
+    color: #000
+    display: block
+    padding: 3px
+
+  a.ui-state-hover, a.ui-state-active
+    background-color: #f8f7f7
+
+.ui-autocomplete
+  max-height: 250px
+  max-width: 469px
+  overflow-y: auto
+  overflow-x: hidden
+  padding-right: 20px
+
+
+
+.list_item_container
+  height: 90px
+  padding: 5px
+
+.image_search
+  float: left
+  margin-right: 20px
+
+.price_search
+  font-style: italic
+  font-size: 1.0em
+  font-weight: bold
+  color: #831111
+
+.cls
+  clear: both
+
+#products_search
+  position: absolute
+  z-index: 20
+  font-size: 16px
+  color: #A8A9AA
+  margin: 0
+  padding-left: 5px
+  width: 448px
+  height: 26px
+  border: solid 1px #999
+  border-radius: 3px 0px 0px 3px
+
+.searchbtn
+  background: url('icons/icon_search.png') 0 0px no-repeat
+  border: none
+  font-size: 0
+  line-heigth: 0
+  padding: 0
+  margin: 0
+  width: 31px
+  height: 28px
+
+.search_descr
+  color: #333
+.search_descr.header
+  color: #990000
+
+.from_to
+  width: 45px
+
+.icon
+  display: inline-block
+
+  height: 25px
+  width: 30px
+  .yes
+    position: absolute
+    height: 40px
+
+.height15
+  height: 15px
+
+.label-important, .badge-important
+  background-color: #C13832 !important
+
+.label
+  border-radius: 3px
+
+.label, .badge
+  position: relative
+  background-color: #999999
+  color: #FFFFFF
+  display: inline-block
+  font-size: 10pt !important
+  font-weight: bold
+  line-height: 14px
+  padding: 2px 4px
+  margin: 5px 0px 0px 0px
+  bottom: 5px
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
+  vertical-align: baseline
+  white-space: nowrap

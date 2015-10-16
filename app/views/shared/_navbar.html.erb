@@ -1,0 +1,30 @@
+<div class="row p-t-10">
+<nav class="navbar navbar-muzkom navbar-default m-0 raleway">
+  <div class="container-fluid p-l-0">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed m-t-20" data-toggle="collapse" data-target="#navbar222" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand showLeftMenu"><strong>КАТАЛОГ ТОВАРОВ</strong></div>
+      <center><div class="navbar-filter visible-sm-block visible-xs-block">
+        <%default = @brand.id if @brand && !@subcategory%>
+        <%= select_tag :brand,  options_from_collection_for_select(@brands_for_filter, 'id', 'name', default), {:prompt =>"Производитель", :class => "form-control brand-selector raleway", :change=>"selectBrand" }%>
+      </div></center>
+    </div>
+    <div aria-expanded="false" id="navbar222" class="navbar-collapse collapse ">
+        <ul class="nav navbar-nav nav-md nav-mk" >
+            <li><%= link_to "Новости", publications_path, :class=>"nav-a"%></li>
+            <li><%= link_to "О нас", "/about_us", :class=>"nav-a"%></li>
+            <li><%= link_to "Оплата/доставка", "/payment_delivery", :class=>"nav-a"%></li>
+            <li><%= link_to "Гарантия", "/warranty", :class=>"nav-a"%></li>
+            <li><%= link_to "Акции", promotions_path, :class=>"nav-a"%></li>
+            <li><%= link_to "Дисконт", "/discount", :class=>"nav-a"%></li>
+            <li><%= link_to "Контакты", new_feedback_path, :class=>"nav-a"%></li>
+        </ul>
+    </div>
+  </div><!--/.container-fluid -->
+</nav>
+</div>

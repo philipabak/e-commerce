@@ -1,0 +1,57 @@
+<%meta_data(@brand)%>
+<div class="clearfix">
+  <div class="col1of5">
+    <%=render "shared/brands_filter"%>
+    <%=render "shared/range_search" %>
+    <%=render "shared/catalog"%>
+    <%=render "shared/news"%>
+    <%=render "shared/left_banner"%>
+  </div>
+  <div class="col3of5">
+
+      <div class="container mhs">
+        <div class="mhm mvs">
+          <h3 class="mbs"><%= @brand.name%></h3>
+          <div class="breadcrumb">
+            <%= link_to "Главная", root_path %> /
+            <span>Товары <%= @brand.name%></span>
+          </div>
+          <% unless @brand.text.blank? %>
+            <div class="mbl">
+              <%=image_tag @brand.logo_url(:thumb), :class=>"left mrl"%>
+              <%= @brand.text.html_safe%>
+            </div>
+          <%end%>
+          <div class="clearfix mbm">
+            <div class="col1of2">
+              <span>Сортировка по:</span>
+              <a href="?order=price">цене</a>
+              <a href="?order=name">названию</a>
+              <a href="?order=date">дате</a>
+              <!-- <a href=""><strong>АКЦИИ</strong></a> -->
+            </div>
+            <div class="col1of2">
+              <div class="pagination right">
+                <%= paginate @products%>
+              </div>
+            </div>
+          </div>
+          <hr color="#f5f5f5"/>
+          <% @products.each do |product|%>
+            <%= render "shared/product", :product => product%>
+          <%end%>
+          <div class="clearfix mbm">
+            <div class="pagination right">
+              <%= paginate @products%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col1of5">
+    <%=render "shared/code_search"%>
+    <%=render "shared/contacts"%>
+    <%=render "shared/latest"%>
+    <%=render "shared/right_banner"%>
+  </div>
+</div>

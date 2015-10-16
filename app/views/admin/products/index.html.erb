@@ -1,0 +1,99 @@
+<div class="clearfix">
+  <div class="col1of4">
+    <%=render "catalog"%>
+  </div>
+  <div class="col3of4">
+  <div class="container mbl mls">
+    <div class="box-header mbm">
+      <div class="clearfix">
+      <div class="col1of2">
+        <h1>
+          <% unless @subcategory.nil?%>
+          <%= @subcategory.name%>
+          <%else%>
+          Товары <%= @brand.name unless @brand.nil?%>
+          <%= "снятые с производства" if session[:show_only_products] == "withdrawn"%>
+          <%= "в продаже" if session[:show_only_products] == "on_sale"%>
+          <%end%>
+        </h1>
+      </div>
+      <div class="col1of2">
+        <div class="mtm right">
+        <%= link_to "Товары в продаже", switch_admin_products_path(:show=>"on_sale")%> |
+        <%= link_to "Cнятые с производства", switch_admin_products_path(:show=>"withdrawn")%>
+        </div>
+      </div>
+      </div>
+    </div>
+      <div class="clearfix mam">
+        <div class="left mtm">
+          <%= paginate @products%>
+        </div>
+        <%= link_to "Добавить",  new_product_link, :class=>"submit-button right" %>
+      </div>
+      <div class="mhm">
+      <table class="data-table mbm">
+        <thead>
+          <tr>
+            <td class="checkbox"><input type="checkbox"></td>
+            <td class="actions">Производитель</td>
+            <td>Товар</td>
+            <td style='width: 125px'>Цена</td>
+            <td style="width: 280px">Действия</td>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="9">Показано <%= "#{@products.count} из #{@total}" %> товаров</td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% @products.each do |product|%>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td><%= product.brand.try(:name)%></td>
+            <td>
+              <%= link_to product.name, edit_product_link(product)%>
+              <%if product.promotions.any?%>
+                <p class="muted">
+                <%product.promotions.each do |promo|%>
+                  <%= promo.title%><br />
+                <%end%>
+                </p>
+              <%end%>
+            </td>
+            <td>
+              <%=form_for [:admin, product], :remote => true do |f|%>
+                <%=f.text_field :price, :value=> real_product_price(product.price), :class=>"edit-price"%>
+              <%end%>
+              <%= product.currency.upcase%>
+            </td>
+            <td>
+
+            <%= link_to availability_button(product.status_id.to_i, 1), product_status_link(product, :button_id => 1), :method => :post, :class => "avaibility-button", :id=>"status_#{product.id}_1", :remote=>true %>
+            <%= link_to availability_button(product.status_id.to_i, 2), product_status_link(product, :button_id => 2), :method => :post, :class => "avaibility-button", :id=>"status_#{product.id}_2", :remote=>true %>
+            <%= link_to availability_button(product.status_id.to_i, 3), product_status_link(product, :button_id => 3), :method => :post, :class => "avaibility-button", :id=>"status_#{product.id}_3", :remote=>true %>
+            <%= link_to availability_button(product.status_id.to_i, 5), product_status_link(product, :button_id => 5), :method => :post, :class => "avaibility-button", :id=>"status_#{product.id}_5", :remote=>true %>
+
+            <%= link_to show_index_button(product.show_index), product_show_index_link(product), :method => :post, :class=>"visibility-button", :id=>"show_index_#{product.id}", :remote=>true%>
+            <%= link_to color_presence_button(product.color_presence), product_color_presence_link(product), :class=>"visibility-button", :method => :post, :id=>"color_visibility_#{product.id}", :remote=>true %>
+            <%= link_to visibility_button(product.visibility), product_visibility_link(product), :class=>"visibility-button", :method => :post, :id=>"visibility_#{product.id}", :remote=>true %>
+
+            <%= link_to 'Edit' , edit_product_link(product), :class=>"action-button" %>
+            <%= link_to 'Delete' , delete_product_link(product), :method=>:delete, :confirm=>"Вы уверены, что хотите удалить эту страницу?", :class=>"action-button"%>
+            </td>
+          </tr>
+          <%end%>
+          <%if @products.empty?%>
+            <tr>
+              <td colspan="9"><p>Нет товаров</p></td>
+            </tr>
+          <%end%>
+        </tbody>
+      </table>
+      <div class="mbm">
+        <%= paginate @products%>
+      </div>
+    </div>
+  </div>
+</div>

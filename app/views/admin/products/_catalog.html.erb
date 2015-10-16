@@ -1,0 +1,18 @@
+<div class="container mbl mrs">
+  <div class="box-header mbm"><h1>Каталог</h1></div>
+  <ul class="catalog mam">
+  <% @categories.each do |cat|%>
+    <li>
+      <%= link_to "&rarr; #{cat.name}".html_safe, "#", :class=>"category"%>
+      <%unless cat.subcategories.empty?%>
+        <% subs = cat.subcategories.collect{|sub| sub.id}%>
+        <ul class="subcategories mlm <%= "hidden" unless subs.include?(params[:subcategory_id].to_i)%>">
+          <%cat.subcategories.each do |subcat|%>
+          <li class="mls"><%= link_to "- "+subcat.name, admin_subcategory_products_path(subcat)%></li>
+          <%end%>
+        </ul>
+      <%end%>
+    </li>
+  <%end%>
+  </ul>
+</div>

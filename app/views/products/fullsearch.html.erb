@@ -1,0 +1,35 @@
+<% title "Muzkom - Интернет магазин оборудование для: DJ‘s, саунд-продюсеров, музыкантов, ночных клубов"%>
+<% meta_d "DJ оборудование, студийное оборудование, музыкальные инструменты, звуковое и световое оборудование"%>
+<% meta_k "звуковое оборудование и музыкальные инструменты"%>
+<div class="clearfix">
+  <div class="col1of5">
+    <%=render "shared/brands_filter"%>
+    <%=render "shared/catalog"%>
+    <%=render "shared/news"%>
+    <%=render "shared/left_banner"%>
+  </div>
+  <div class="col3of5">
+    <div class="mhs">
+      <div class="clearfix mbs">
+        <%@products.each_with_index do |product, index|%>
+            <%= render "shared/product", :product => product%>
+          <%if (index+1)%2 == 0 %>
+      </div>
+      <div class="clearfix mbs">
+          <%end%>
+        <%end%>
+      </div>
+      <div class="clearfix mbm">
+        <div class="pagination right">
+          <%#= paginate @products%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col1of5">
+    <%=render "shared/code_search"%>
+    <%=render "shared/contacts"%>
+    <%=render "shared/latest"%>
+    <%=render "shared/right_banner"%>
+  </div>
+</div>

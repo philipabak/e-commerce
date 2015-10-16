@@ -1,0 +1,29 @@
+<% list = ""%>
+<% @current_category.subcategories.visible.order('subcategories.priority').each{ |sc| list = list + "#{sc.name.strip}, "}%>
+<% title sanitize(strip_tags("#{@current_category.name} | #{@keywords_text.text}").gsub("\"", "&quot;") )%>
+<% meta_d sanitize(strip_tags("#{list} | #{@keywords_text.text}").gsub("\"", "&quot;") )%>
+<% meta_k sanitize(strip_tags("#{list}").gsub("\"", "&quot;") )%>
+
+<div class="row p-t-15 p-l-10 p-b-15 categorynav">
+    <div>Каталог товаров > <%= @current_category.name %></div>
+</div>
+<div class="row white m-l-m10 subcategory_container">
+  <div class="row ">
+    <h6  class="opensans red m-20 m-b-0"><strong><i><%= @current_category.name %></i></strong></h5>
+  </div>
+  <div class="row subcategory-list" >
+    <% @current_category.subcategories.visible.order('subcategories.priority').each do |subcategory| %>
+      <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6">
+        <div class="row m-t-40 m-r-17 m-b-40 m-l-17 subcategory-item">
+          <%= link_to (image_tag(subcategory.logo_url, :size => "200x200", :alt => subcategory.name)), category_path(subcategory) %><br/>
+          <div class = "row m-l-5 m-r-5 raleway subcategorylink">
+            <%= link_to subcategory.name, category_path(subcategory)%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class=" row p-30">
+      <%= @current_category.text.html_safe%>
+  </div>
+</div>

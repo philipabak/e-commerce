@@ -1,0 +1,159 @@
+<% @product.videos.build %>
+<% param = @subcategory unless @subcategory.nil?%>
+<% param = @brand unless @brand.nil?%>
+<%= form_for [:admin, param, @product] do |product_form|%>
+<div class="clearfix">
+  <ul class="tabs" id="tab-switcher">
+    <li id="current" for="tab1">Основное</li>
+    <li for="tab2">Описания</li>
+    <li for="tab3" <%='class=inactive' if @product.new_record?%>>Видео</li>
+    <li for="tab4" <%='class=inactive' if @product.new_record?%>>Изображения</li>
+  </ul>
+  <%= link_to "Оменить", product_cancel_link, :class=>"submit-button right"%>
+  <%=product_form.submit "Сохранить", :class=>"submit-button right mrs"%>
+</div>
+<fieldset class="mbm">
+  <div id="tab1">
+    <div class="clearfix">
+      <div class="col1of2">
+        <div class="field clearfix">
+          <label for="">Наименование товара</label>
+          <%=product_form.text_field :name, :class=>"text"%>
+        </div>
+        <div class="field clearfix">
+          <label for="">Видимый</label>
+          <span><%=product_form.radio_button :visibility, true%> Да</span>
+          <span><%=product_form.radio_button :visibility, false%> Нет</span>
+        </div>
+        <div class="field clearfix">
+          <label for="">Доступны другие цвета</label>
+          <span><%=product_form.radio_button :color_presence, true%> Да</span>
+          <span><%=product_form.radio_button :color_presence, false%> Нет</span>
+        </div>
+        <div class="field clearfix">
+          <div class="col2of5">
+            <label for="">Статус</label>
+            <%=product_form.select :status_id, options_from_collection_for_select(@statuses, :id, :name, id_or_blank(@product.status)), {}, :class=>"chzn-select"%>
+          </div>
+        </div>
+        <div class="field clearfix">
+          <div class="col4of5">
+            <label for="">Категория</label>
+            <%=product_form.select :subcategory_id, option_groups_from_collection_for_select(@categories, :subcategories, :name, :id, :name, id_or_blank(@product.subcategory)),{:include_blank=>"Выберите категорию"}, :class=>"chzn-select"%>
+          </div>
+        </div>
+        <div class="field clearfix">
+          <div class="col4of5">
+          <label for="">Производитель</label>
+          <%=product_form.select :brand_id, options_from_collection_for_select(@brands, :id, :name, id_or_blank(@product.brand)), {:include_blank=>"Выберите производителя"}, :class=>"chzn-select"%>
+          </div>
+        </div>
+        <div class="field clearfix">
+          <lable>Акции</lable>
+          <%=product_form.select :promotion_ids, options_from_collection_for_select(@promotions, :id, :title, @product.promotion_ids), {}, :multiple=>true, :class=>"chzn-select", :id=>"promotion-selector", "data-placeholder"=>"Выберите акции"%>
+        </div>
+        <div class="field clearfix">
+          <div class="col1of2">
+            <div class="mrm">
+              <label for="">Цена</label>
+              <div class="col3of5">
+                <%=product_form.text_field :price, :class=>"text", :value=>real_product_price(@product.price)%>
+              </div>
+              <div class="col2of5">
+                <div class="mls pts">
+                  <%= product_form.select :currency, ["uah", "usd", "eur"]%>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col1of2">
+            <div id="sale-price" class="<%= 'hidden' unless @product.promotions.any?%> mlm">
+              <label for="">Акционная цена</label>
+              <div class="col3of5">
+                <%=product_form.text_field :sale_price, :class=>"text", :value=>real_product_price(@product.sale_price)%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col1of2">
+        <div class="mll right">
+          <label for="">Изображение товара</label><br />
+          <div class="image-preview">
+          <%= image_tag(@product.image_url) %>
+          </div>
+          <%= product_form.file_field :image %>
+          <%= product_form.hidden_field :image_cache %>
+        </div>
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label for="">Краткое описание товара</label>
+      <%= product_form.text_area :short_description, :class=>"text", :id=>"short-pannel", :size=>"0x3" %>
+    </div>
+  </div>
+  <div id="tab2">
+    <div class="field">
+      <label for="">Заголовок страницы</label>
+      <%=product_form.text_field :title, :class=>"text"%>
+    </div>
+    <div class="field">
+      <label for="">Ключевые слова <span class="muted">(Meta keywords)</span></label>
+      <%=product_form.text_area :meta_k, :class=>"text",:size=>"0x3"%>
+    </div>
+    <div class="field">
+      <label for="">Описание <span class="muted">(Meta description)</span></label>
+      <%=product_form.text_area :meta_d, :class=>"text", :size=>"0x4"%>
+    </div>
+    <div class="field">
+      <label for="">Полное описание товара</label>
+      <%=product_form.text_area :description, :class=>"text", :id=>"pannel", :style=> "width: 780px; height: 300px;"%>
+    </div>
+  </div>
+
+  <div id="tab3">
+    <div class="clearfix">
+    <div class="video-container">
+      <!-- <% @product.videos.each do |video|%>
+               <%= video.code.html_safe%>
+               <%end%> -->
+    </div>
+    </div>
+    <%= product_form.fields_for :videos do |video_form|%>
+    <div class="field">
+      <label for="">Код видео</label>
+      <%= video_form.text_area :code, :class=>"text", :size=>"0x5"%>
+      <% unless video_form.object.nil? || video_form.object.new_record? %>
+      <div class="clerfix">
+        <span>Удалить:</span>
+        <%= video_form.check_box :_destroy %>
+      </div>
+      <% end %>
+    </div>
+   <%end%>
+  </div>
+  <div id="tab4">
+    <div id="gallery_preview">
+      <% @product.photos.each do |photo|%>
+      <div class="mbl" id="gallery_image_<%= photo.id%>">
+        <%= image_tag photo.image_url(:thumb)%><br />
+        <%=link_to "Удалить", admin_photo_path(photo), :method=>:delete, :remote=>true%>
+      </div>
+      <%end%>
+    </div>
+    <%= link_to "Добавить изображение", "#upload_gallery_image", :class=>"submit-button", :rel=>"facebox"%>
+  </div>
+</fieldset>
+<%end%>
+<% unless @product.new_record?%>
+<div id="upload_gallery_image" class="hidden">
+<%= form_for [:admin, @photo], :html=>{:multipart=> true, :remote=>true} do |f|%>
+  <h3 class="mbm">Добавить фото в галерею</h3>
+  <%= f.file_field :image%>
+  <%= f.hidden_field :product_id, :value=>@product.id%>
+  <div class="mvm">
+    <%=f.submit "Загрузить", :class=>"submit-button"%>
+  </div>
+<%end%>
+</div>
+<%end%>

@@ -1,0 +1,103 @@
+<div class="clearfix">
+  <div class="col1of5">
+    <%=render "shared/brands_filter"%>
+    <%=render "shared/catalog"%>
+    <%=render "shared/news"%>
+    <%=render "shared/left_banner"%>
+  </div>
+  <div class="col3of5">
+    <div class="container mhs">
+      <div class="mhm mvs">
+        <h3 class="mbm">Оформление заказа</h3>
+        <%=form_for @checkout do |f|%>
+          <div class="field clearfix">
+            <div class="col1of2">
+              <label for="">Имя <span class="astra">*</span></label>
+              <%= f.text_field :firstname, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of2">
+              <label for="">Фамилия <span class="astra">*</span></label>
+              <%= f.text_field :lastname, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of2">
+              <label for="">Отчество <span class="astra">*</span></label>
+              <%= f.text_field :fathername, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of3">
+              <label for="">Номер телефона <span class="astra">*</span></label>
+              <%= f.text_field :phone, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of3">
+              <label for="">Номер дисконтной карты  </label>
+              <%= f.text_field :discount, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of2">
+            <label for="">ФИО владельца дисконта</label>
+            <%= f.text_field :discount_owner, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of2">
+              <label for="">E-mail <span class="astra">*</span></label>
+              <%= f.text_field :email, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of2">
+              <label for="">Страна <span class="astra">*</span></label>
+              <%= f.text_field :country, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <div class="col1of2">
+              <label for="">Город <span class="astra">*</span></label>
+              <%= f.text_field :city, :class=>"text"%>
+            </div>
+          </div>
+          <div class="field">
+            <label for="">Адрес доставки <span class="astra">*</span></label>
+            <%= f.text_area :address, :class=>"text", :size=>"40x5"%>
+          </div>
+          <div class="field clearfix">
+            <div class="col2of3">
+              <label for="">Желательное время доставки</label>
+              <%= f.text_field :delivery_time, :class=>"text"%>
+            </div>
+          </div>
+          <% if @cart.color_present %>
+            <div class="field clearfix">
+              <div class="col3of3">
+                <label for="">Желательный цвет товара (если товар доступен в разных цветах)</label>
+              </div>
+              <div class="col2of3">
+                <%= f.text_field :wished_color, :class=>"text"%>
+              </div>
+            </div>
+          <% end %>
+          <div class="field">
+            <label for="">Комментарии к заказу</label>
+            <%= f.text_area :comment, :class=>"text", :size=>"40x5"%>
+          </div>
+          <div class="mbl">
+            <%=f.submit "Заказать", :class=>"submit-button"%>
+          </div>
+        <%end%>
+        <p>Заказы которые были оформлены до 18 00 принимаются в этот же день. Заказы которые были оформлены после 18 00 переносятся на следующий день. Заказы оформленные в пт после 16 00, а также в сб и вс переносятся на следующий понедельник.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col1of5">
+    <%=render "shared/contacts"%>
+    <%=render "shared/right_banner"%>
+  </div>
+</div>

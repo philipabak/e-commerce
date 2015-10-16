@@ -1,0 +1,73 @@
+<% title "Muzkom - Интернет магазин оборудование для: DJ‘s, саунд-продюсеров, музыкантов, ночных клубов"%>
+<% meta_d "DJ оборудование, студийное оборудование, музыкальные инструменты, звуковое и световое оборудование"%>
+<% meta_k "звуковое оборудование и музыкальные инструменты"%>
+  <div class="row m-0 b-t-10 p-0 h-30 p-b-10 p-t-10">
+    <div class="col-md-4 col-sm-4 col-xs-4 p-0">
+      <div class="col-md-2 col-md-offset-1 col-sm-2 p-0"><center><span class="small-goriz-icon m-l-0 m-10 icon-delivery"></span></center></div>
+      <div class="col-md-9 col-sm-10 p-0 p-l-5">
+        <p class="grey p-t-15 p-t-xs-0 text-left text-xs-center" style="line-height:16px;">Бесплатная доставка</p>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-4 p-0">
+      <div class="col-md-2 col-md-offset-1 col-sm-2 p-0"><center><span class="small-goriz-icon m-l-0 m-10 icon-prices"></span></center></div>
+      <div class="col-md-9 col-sm-10">
+        <p class="grey p-t-15 p-t-xs-0 text-left text-xs-center" style="line-height:16px;">Дисконтная программа</p>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-4 p-0">
+      <div class="col-md-2 col-md-offset-1 col-sm-2 p-0"><center><span class="small-goriz-icon m-l-0 m-10 icon-money"></span></center></div>
+      <div class="col-md-10 col-sm-10 p-r-0">
+        <p class="grey p-t-15 p-t-xs-0 text-left text-xs-center" style="line-height:16px;">Рассрочка, оплата частями</p>
+      </div>
+    </div>
+  </div>
+  <div class="row p-l-5">
+    <%=link_to image_tag(@slides[0].image_url,:style=>"width:100%;"), @slides[0].link%>
+  </div>
+  <%=render "shared/latest"%>
+  <div class="row m-t-30 m-b-40" style="padding: 0 20px">
+    <%@products.each_with_index do |product, index|%>
+      <div class="col-md-4 p-10 col-lg-3 col-sm-4 col-xs-12 content-center">
+          <div class="hidden-xs item  content-center">
+            <%= link_to  product_path(product) do %>
+              <%= image_tag(product.image_url(:thumb), :class=> "product-image") %>
+              <div class="product-description">
+                <%= render "shared/product_price", :product => product%>
+                <span class="product-name"><%= product.name %></span>
+                <p class="status status-available"><%= product.status.name%></p>
+              <!-- <p class="status status-other"><%= product.status.name%></p> -->
+              <%#= link_to "", add_cart_path(:id=>product.id), :class=>"buy-button right", :method=>"put" do %>
+              </div>
+              <p class="content-center">
+                <span class="big-icon cart-blue-rectangle addCartButton"></span>
+              </p> 
+            <%end%>
+          </div>
+          <div class="visible-xs-block item content-center">
+             <%= link_to  product_path(product) do %>
+                <div class="col-xs-6">
+                  <%= image_tag(product.image_url(:thumb),:height=>"150px", :width=>"150px") %>
+                  <%= render "shared/product_price", :product => product%>
+                </div>
+                <div class="col-xs-6" style="text-align:left">
+                  <span class="product-name"><%= product.name %></span>
+                  <p class="grey">Код товара: <%= product.id %></p>
+                  <p class="status status-available"><%= product.status.name%></p>
+                </div>
+              <%end%>
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1 paddingLeft0" style="text-align:left">
+                <%= product.short_description.html_safe %>
+              </div>
+              <div class="col-xs-4 col-xs-offset-7">
+                <div class="col-4 pull-right bg-red">
+                  <a class="pull-right text-white raleway" href="#" style="font-size:16px;padding: 10px 20px"><strong>Купить</strong></a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    <%end%>
+  </div>
+  <%=render "shared/short_about"%>
+
